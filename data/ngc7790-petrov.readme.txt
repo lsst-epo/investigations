@@ -1,0 +1,60 @@
+J/A+A/376/745       CCD standards for U and I in NGC 7790       (Petrov+, 2001)
+================================================================================
+CCD standards for U and I in the open cluster NGC 7790
+    Petrov G., Seggewiss W., Dieball A., Kovachev B.
+   <Astron. Astrophys. 376, 745 (2001)>
+   =2001A&A...376..745P
+================================================================================
+ADC_Keywords: Clusters, open ; Photometry, UBVRI ; Photometry, CCD
+Keywords: techniques: photometric - astronomical data bases: miscellaneous -
+          open clusters: individual: NGC 7790
+
+Abstract:
+    Photometric U and I standard sequences in the field of the open
+    cluster NGC 7790 are presented. The intention is to achieve wide
+    ranges in magnitude and colour, making these sequences suitable for
+    calibrating deep CCD photometry. The 84 standard stars extend the BVR
+    sequences of Odewahn et al. (1992PASP..104..553O) to the near UV and IR,
+    respectively.
+
+Objects:
+    ----------------------------------------------------------
+       RA   (2000)   DE    Designation(s)
+    ----------------------------------------------------------
+    23 58 24   +61 13.0    NGC 7790 = C 2355+609 = OCl 276
+    ----------------------------------------------------------
+
+
+File Summary:
+-------------------------------------------------------------------------------
+  FileName    Lrecl   Records    Explanations
+-------------------------------------------------------------------------------
+ReadMe          80          .    This file
+table4.dat     107         84    Magnitudes and errors of all 84 standard stars
+--------------------------------------------------------------------------------
+
+Byte-by-byte Description of file: table4.dat
+--------------------------------------------------------------------------------
+   Bytes Format Units    Label  Explanation
+--------------------------------------------------------------------------------
+   1-  3  I3    ---      Seq    Star number
+   6- 11  F6.3  mag      Usmag  U magnitude (close to Johnson's U magnitude)
+  14- 19  F6.4  mag    e_Usmag  Photometric error in U
+  22- 27  F6.3  mag      Bsmag  B magnitude (close to Johnson's B magnitude)
+  30- 35  F6.4  mag    e_Bsmag  Photometric error in B
+  38- 43  F6.3  mag      Vsmag  V magnitude (close to Johnson's V magnitude)
+  46- 51  F6.4  mag    e_Vsmag  Photometric error in V
+  54- 59  F6.3  mag      Rsmag  R magnitude (close to Kron/Cousins' R magnitude)
+  62- 67  F6.4  mag    e_Rsmag  Photometric error in R
+  70- 75  F6.3  mag      Ismag  I magnitude (close to Kron/Cousins' I magnitude)
+  78- 83  F6.4  mag    e_Ismag  Photometric error in I
+  86- 91  F6.3  mag      d(B)   Difference in B (1)
+  94- 99  F6.3  mag      d(V)   Difference in V (1)
+ 102-107  F6.3  mag      d(R)   Difference in R (1)
+--------------------------------------------------------------------------------
+Note (1): Magnitude differences to Odewahn et al. (1992PASP..104..553O)
+--------------------------------------------------------------------------------
+
+Acknowledgements:   Wilhelm Seggewiss <seggewis@astro.uni-bonn.de>
+================================================================================
+(End)                                  Patricia Bauer [CDS]          11-Jul-2001

@@ -1,0 +1,81 @@
+J/A+AS/145/365      BVI photometry of NGC 7790               (Gupta+, 2000)
+================================================================================
+A complete photometric study of the open cluster NGC 7790 containing
+Cepheid variables.
+     Gupta A.C., Subramaniam A., Sagar R., Griffiths W.K.
+    <Astron. Astrophys. Suppl. Ser. 145, 365 (2000)>
+    =2000A&AS..145..365G
+================================================================================
+ADC_Keywords: Clusters, open ; Photometry, CCD ; Photometry, Cousins
+Keywords: Galaxy: open clusters: individual: NGC 7790 - stars: evolution -
+          HR diagram
+
+Abstract:
+    CCD photometry of the northern open star cluster NGC 7790 has been
+    carried out in BVI photometric passbands down to V~21mag for 1150
+    stars of which for ~700 stars, the data is obtained for the first
+    time. We derive the most reliable parameters for this cluster using
+    all the available photometric, spectroscopic and proper motion data.
+    The interstellar extinction over the cluster area is uniform and
+    normal with E(B-V)=0.51+/-0.03mag. We determine a distance of
+    3.3+/-0.23Kpc to the cluster. The theoretical isochrone fittings to
+    the Cepheid variables as well as the evolved part of the main-sequence
+    near turn-off point indicate that the cluster is 120+/-20Myr old. We
+    estimate the cluster radius to be 3.7' using radial stellar density
+    profile. Both the distance and age determined using period
+    luminosity/age relations for the Cepheid variables are consistent
+    with their membership of the cluster. This unique opportunity has
+    therefore been used to refine the zero-point of the period-luminosity
+    relation for the Galactic Cepheids.
+
+Objects:
+    ------------------------------------------------
+       RA   (2000)   DE      Designation(s)
+    ------------------------------------------------
+    23 58 24     +61 13.0    NGC 7790 = C 2355+609
+    ------------------------------------------------
+
+File Summary:
+--------------------------------------------------------------------------------
+ FileName      Lrecl  Records   Explanations
+--------------------------------------------------------------------------------
+ReadMe            80        .   This file
+table1.dat        67     1156   Relative (X, Y) pixel positions and CCD BVI
+                                magnitudes of stars measured in the field of
+                                NGC 7790 are presented.
+table1.tex        82     1272   LaTeX version of table 1
+--------------------------------------------------------------------------------
+
+See also:
+           V/28 : Proper motions and UBV phot. in 4 open clusters (Frolov 1980)
+ J/PASP/104/553 : CCD Standard Fields (Odewahn+ 1992)
+
+Byte-by-byte Description of file: table1.dat
+--------------------------------------------------------------------------------
+   Bytes Format Units   Label     Explanations
+--------------------------------------------------------------------------------
+   2-  5  I4    ---     Seq       Sequential number (1)
+   7- 12  F6.2  pix     Xpos      X position (2)
+  14- 19  F6.2  pix     Ypos      Y position (2)
+  21- 26  F6.3  mag     Vmag      V magnitude
+  28- 33  F6.3  mag     B-V       ? B-V colour index
+  35- 40  F6.3  mag     V-I       V-I Cousins colour index
+  42- 68  A27   ---     Names     Other identifications, separated by commas (3)
+--------------------------------------------------------------------------------
+Note (1): Numbers are the same as Phelps & Janes (1994ApJS...90...31P)
+          Numbers staring from 5001 is new detection of stars in this cluster
+Note (2): The coordinate system is that of the database given by Phelps & Janes
+           (1994ApJS...90...31P). The center of the cluster is located at
+            RA = 23h 54min 12s, DE = +60{deg} 57' (1950.0)
+           1 pix = 0.74". North is up, and east is to the left.
+Note (3): Other identifications:
+       F: Frolov, 1977IzPul.195...80F, Cat. <V/28>
+       I: Iyeshima et al., 1994, Ann. Rep. Nishi - Harima Astron. Obs. 4, 18
+       O: Odewahn et al., 1992PASP..104..553O, Cat. <J/PASP/104/553>
+       P: Pedreros et al., 1984ApJ...286..563P
+       R: Romeo et al., 1989MNRAS.240..459R
+--------------------------------------------------------------------------------
+
+Acknowledgements: Alok Chandra Gupta <acgupta@prl.ernet.in>
+================================================================================
+(End)                                        Patricia Bauer [CDS]    05-Dec-2000
