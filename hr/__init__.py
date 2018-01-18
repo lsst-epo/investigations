@@ -1,2 +1,2 @@
 from .data import get_hr_data
-from .visual import diagram
+from .visual import hr_diagram
