@@ -150,11 +150,15 @@ def hr_diagram_interactive(doc):
     x, y = abs_mag(cluster)
     y_range = [max(y) + 0.5, min(y) - 0.25]
     source = ColumnDataSource(data=dict(x=x, y=y), name='cluster')
-    pf = figure(y_range=y_range, title='ngc2849')
+    pf = figure(y_range=y_range, title='berkeley20')
     _diagram(source=source, plot_figure=pf, name='hr', color='gray', yaxis_label='V absolute [mag]')
+    pf_image = figure(x_range=(0,1), y_range=(0,1))
+    pf_image.image_url(url=['notebooks/data/berkeley20.png'], x=0, y=0, w=1, h=1, anchor="bottom_left")
+    pf_image.toolbar_location = None
+    pf_image.axis.visible = False
     inputs = widgetbox(text_input)
-    layout = row(inputs, pf)
-    
+    layout = column(text_input, row(pf_image, pf))
+
     def update_data(attrname, old, new_):
         try:
             cluster = get_hr_data(text_input.value)
@@ -162,10 +166,10 @@ def hr_diagram_interactive(doc):
             #    y = luminosity(y)
             y_range = [max(new_y) + 0.5, min(new_y) - 0.25]
             source = ColumnDataSource(data=dict(x=new_x, y=new_y), name='cluster')
-            pf = figure(y_range=y_range, title='ngc2849')
+            pf = figure(y_range=y_range, title=text_input.value)
             _diagram(source=source, plot_figure=pf, name='hr', color='gray', yaxis_label='V absolute [mag]')
             pf.title.text = text_input.value
-            layout.children[1] = pf
+            layout.children[1] = row(pf_image, pf)
         except Exception as e:
             print(e)
 

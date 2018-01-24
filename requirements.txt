@@ -1,4 +1,3 @@
 bokeh
 notebook
--e git://github.com/jupyterlab/jupyterlab.git@master#egg=jupyterlab
--e git://github.com/bokeh/jupyterlab_bokeh.git@master#egg=jupyterlab_bokeh
+jupyterlab
