@@ -142,6 +142,27 @@ def hr_diagram(cluster_name):
     show(pf)
 
 
+def hr_diagram_skyviewer(cluster_name):
+    """
+    """
+    text_input = TextInput(value=cluster_name, title='cluster:')
+    cluster = get_hr_data(cluster_name)
+    x, y = abs_mag(cluster)
+    y_range = [max(y) + 0.5, min(y) - 0.25]
+    source = ColumnDataSource(data=dict(x=x, y=y), name='cluster')
+    pf = figure(y_range=y_range, title='berkeley20')
+    _diagram(source=source, plot_figure=pf, name='cluster', color='gray',
+             yaxis_label='V absolute [mag]')
+    pf_image = figure(x_range=(0,1), y_range=(0,1))
+    pf_image.image_url(url=['notebooks/data/b20.png'],
+                       x=0, y=0, w=1, h=1, anchor="bottom_left")
+    pf_image.toolbar_location = None
+    pf_image.axis.visible = False
+    inputs = widgetbox(text_input)
+    layout = column(text_input, row(pf_image, pf))
+    show(layout)
+
+    
 def hr_diagram_interactive(doc):
 
     text_input = TextInput(value='ngc2849', title='Cluster:')

@@ -1,14 +1,9 @@
 import numpy as np
-from bokeh.plotting import figure, show
-from bokeh.io import output_notebook
 import csv
 import re
 
 from astropy import units as u
 from astropy.coordinates import SkyCoord
-
-
-output_notebook()
 
 
 class OpenCluster(object):
