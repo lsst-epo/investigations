@@ -1,0 +1,24 @@
+#+TITLE: EPO Meeting
+#+Startup: indent
+#+TODO: TODO(t) | IN_PROGRESS(p) | DONE(d)
+#+TAGS: Bug(b) Improvement(i) Research(r) Experiment(e) Analysys(a)
+
+* L vs T
+
+* Improve copy.
+* Save and persistence options
+
+Saving session state in some way.
+
+* Stupid ipywidget end message when using Textarea and Labels.
+* Selection widget on XY to HR Diagram
+
+* Default configurations for Jupyter
+
+Collapse code at the start, minimize left slider. Load specific notebook.
+
+auto-running some cells.
+
+Come up with list of other ideal configurations and extensions that should be implemented.
+
+
