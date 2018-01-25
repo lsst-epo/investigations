@@ -1,14 +1,9 @@
 import numpy as np
-from bokeh.plotting import figure, show
-from bokeh.io import output_notebook
 import csv
 import re
 
 from astropy import units as u
 from astropy.coordinates import SkyCoord
-
-
-output_notebook()
 
 
 class OpenCluster(object):
@@ -87,6 +82,7 @@ class NGC7790(OpenCluster):
     coord = SkyCoord("23 58 24.0 +61 12 30", unit=(u.hourangle, u.deg),
                      distance=3230 * u.parsec)
 
+
 # http://adsbit.harvard.edu/cgi-bin/nph-iarticle_query?bibcode=1968ApJ...151..611M&db_key=AST&page_ind=3&data_type=GIF&type=SCREEN_VIEW&classic=YES
 # Morgan-Keenan (MK), Effective Surface Temperature, U-V, B-V
 temps = [['O5', 37500, -1.47, -0.32],
@@ -131,6 +127,7 @@ temps = [['O5', 37500, -1.47, -0.32],
          ['K', 3700],
          ['M', 2400]]
 
+
 def get_hr_data(name):
     if name.lower() == "berkeley20":
         data = Berkeley20()
@@ -146,4 +143,5 @@ def get_hr_data(name):
     if data:
         return data
 
-L_ZERO_POINT = 3.0128 * pow(10, 28) # units to add:  * u.watt
+
+L_ZERO_POINT = 3.0128 * pow(10, 28)  # units to add:  * u.watt
