@@ -22,7 +22,19 @@ class Berkeley20(OpenCluster):
     https://www.aanda.org/articles/aa/abs/2002/27/aa2476/aa2476.html
     """
     coord = SkyCoord("05 32 37.0 +00 11 18", unit=(u.hourangle, u.deg),
-                     distance=8400 * u.parsec)
+                     distance=9000 * u.parsec)  # +- 480
+    fe_h = -0.3
+    tau = 5.5
+    eb_v = 0.15
+    Z = 0.008  # Z_sun
+    d_modulus = 14.7  # (m - M)
+    name = "Berkeley 20"
+    image_path = 'notebooks/data/berkeley20-square.png'
+
+    @property
+    def distance(self):
+        return self.coord.distance.value
+
 
     def cds_stars(cls):
         with open('data/berkeley20.tsv', newline='') as f:
