@@ -5,11 +5,28 @@ import random
 
 from bokeh.layouts import row, column, widgetbox
 from bokeh.models import ColumnDataSource, Range1d
-from bokeh.models.widgets import Slider, TextInput
+from bokeh.models.widgets import Slider, TextInput, Div
 from bokeh.plotting import figure, show
 
 from .data import Berkeley20, NGC2849, get_hr_data, L_ZERO_POINT
 from .science import abs_mag, distance, luminosity, teff
+
+
+def _telescope_pointing_widget():
+    html = '<table><thead><tr>'
+    html += '<td><b>Telescope pointing</b></td>'
+    html += '<td><b>Cluster Name</b></td>'
+    html += '<td><b>Image number</b></td>'
+    html += '<td><b>Right ascension</b></td>'
+    html += '<td><b>Declination</b></td>'
+    html += '</tr></thead><tbody><tr>'
+    html += '<td><img src="files/data/sphere.png"></td>'
+    html += '<td>LSST 8433</td>'
+    html += '<td>20221274993</td>'
+    html += '<td>05h 32m 37s</td>'
+    html += '<td>+00h 11m 18s</td>'
+    html += '</tr></tbody></table>'
+    return Div(text=html, width=600, height=175)
 
 
 def _diagram(plot_figure, source=None, color='black', line_color='#333333',
@@ -161,10 +178,12 @@ def hr_diagram_skyimage(cluster_name):
     """
     """
     cluster = get_hr_data(cluster_name)
-    text_input = TextInput(value=cluster.name, title='cluster:')
+    input_caption = 'Type in the name of your cluster and press Enter/Return:'
+    text_input = TextInput(value=cluster.name, title=input_caption)
     pf = hr_diagram_figure(cluster)
     pf_image = skyimage_figure(cluster)
-    layout = column(text_input, row(pf_image, pf))
+    layout = column(text_input, _telescope_pointing_widget(),
+                    row(pf_image, pf), sizing_mode="scale_width")
     show(layout)
 
 
