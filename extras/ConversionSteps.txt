@@ -1,0 +1,21 @@
+These relations are reliable for main sequence stars ranging 
+from Teff of 3500 K to 8000 K.  If you want to consider [Fe/H] of the cluster, I have left the 
+metallicity term in, if not, just enter [Fe/H]=0.
+
+Calculate Teff using this relation and reddening corrected B-V
+Teff=8575-5222.27*(B-V)+1380.92*(B-V)^2+701.7*(B-V)*([Fe/H]-0.15)
+
+Calculate Bolometric Correction Using the Teff from the previous equation.  This correction is 
+for main sequence stars of the Teff range given above. 
+BC = -1.007203E1 + Teff*4.347330E-3-Teff^2*6.159563E-7+Teff^3*2.851201E-11
+
+Calculate absolute bolometric magnitude using this relation (V is observed V and 'dist' is 
+distance in parsecs).
+AbsoluteBC=V+BC-5*Log(dist/10)-3.1*E(B-V)
+
+Calculate luminosity in in erg/s using this relation.  (Or in solar luminosities by taking off
+the final 4E33 term.)
+Luminosity=10^((4.74-AbsoluteBC)*0.4))*4E33
+
+This gives you Teff and Luminosity based on observed B-V and V, with known distance, E(B-V), 
+and [Fe/H].
