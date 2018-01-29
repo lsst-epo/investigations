@@ -19,8 +19,6 @@ Extras
 
 Design and other supporting content can be found in the `extras` directory.
 
-## License
-
 License
 -------
 
