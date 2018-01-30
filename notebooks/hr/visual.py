@@ -164,14 +164,16 @@ def hr_diagram_figure(cluster):
     Given a cluster create a Bokeh plot figure creating an
     HR diagram.
     """
-    t, l = teff(cluster), luminosity(cluster)
-    x, y = t, l
-    colors = color(t)
+    temps, lums = teff(cluster), luminosity(cluster)
+    x, y = temps, lums
+    colors = color(temps)
     x_range = [max(x) + max(x) * 0.05, min(x) - min(x) * 0.05]
     source = ColumnDataSource(data=dict(x=x, y=y))
-    pf = figure(y_axis_type='log', x_range=x_range, title='HR Diagram for {0}.'.format(cluster.name))
+    pf = figure(y_axis_type='log', x_range=x_range,
+                title='HR Diagram for {0}.'.format(cluster.name))
     _diagram(source=source, plot_figure=pf, name='hr', color=colors,
-             xaxis_label='Effective Tempurature (K)', yaxis_label='Luminosity (☉)')
+             xaxis_label='Effective Tempurature (K)',
+             yaxis_label='Luminosity (☉)')
     return pf
 
 
