@@ -12,7 +12,7 @@ from .data import Berkeley20, NGC2849, get_hr_data, L_ZERO_POINT
 from .science import absolute_mag, distance, luminosity, teff, color
 
 
-def _telescope_pointing_widget():
+def _telescope_pointing_widget(cluster_name):
     html = '<table><thead><tr>'
     html += '<td><b>Telescope pointing</b></td>'
     html += '<td><b>Cluster Name</b></td>'
@@ -21,7 +21,7 @@ def _telescope_pointing_widget():
     html += '<td><b>Declination</b></td>'
     html += '</tr></thead><tbody><tr>'
     html += '<td><img src="files/data/sphere.png"></td>'
-    html += '<td>LSST 8433</td>'
+    html += '<td>%s</td>' % cluster_name
     html += '<td>20221274993</td>'
     html += '<td>05h 32m 37s</td>'
     html += '<td>+00h 11m 18s</td>'
@@ -185,7 +185,7 @@ def hr_diagram_skyimage(cluster_name):
     text_input = TextInput(value=cluster.name, title=input_caption)
     pf = hr_diagram_figure(cluster)
     pf_image = skyimage_figure(cluster)
-    layout = column(text_input, _telescope_pointing_widget(),
+    layout = column(text_input, _telescope_pointing_widget(cluster.name),
                     row(pf_image, pf), sizing_mode="scale_width")
     show(layout)
 
