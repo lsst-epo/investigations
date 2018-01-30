@@ -1,4 +1,4 @@
-"""Visual for HR diagram investigations.
+"""Visual for H-R diagram investigations.
 """
 import math
 import random
@@ -32,7 +32,7 @@ def _telescope_pointing_widget():
 def _diagram(plot_figure, source=None, color='black', line_color='#444444',
              xaxis_label="B-V [mag]", yaxis_label='V [mag]', name=None):
     """Use a :class:`~bokeh.plotting.figure.Figure` and x and y collections
-    to create an HR diagram.
+    to create an H-R diagram.
     """
     plot_figure.circle(x=source.data.get('x'), y=source.data.get('y'),
                        size=5, color=color, alpha=0.92, name=name,
@@ -42,7 +42,7 @@ def _diagram(plot_figure, source=None, color='black', line_color='#444444',
 
 
 def cc_diagram(cluster_name):
-    """Create a :class:`~bokeh.plotting.figure.Figure` to create an HR
+    """Create a :class:`~bokeh.plotting.figure.Figure` to create an H-R
     diagram using the cluster_name; then show it.
     """
     x, y = get_hr_data(cluster_name)
@@ -137,7 +137,7 @@ def m_M_compare_interactive_ngc2849(doc):
 
 
 def hr_diagram(cluster_name):
-    """Create a :class:`~bokeh.plotting.figure.Figure` to create an HR
+    """Create a :class:`~bokeh.plotting.figure.Figure` to create an H-R
     diagram using the cluster_name; then show it.
     """
     cluster = get_hr_data(cluster_name)
@@ -162,7 +162,7 @@ def skyimage_figure(cluster):
 def hr_diagram_figure(cluster):
     """
     Given a cluster create a Bokeh plot figure creating an
-    HR diagram.
+    H-R diagram.
     """
     temps, lums = teff(cluster), luminosity(cluster)
     x, y = temps, lums
@@ -170,9 +170,9 @@ def hr_diagram_figure(cluster):
     x_range = [max(x) + max(x) * 0.05, min(x) - min(x) * 0.05]
     source = ColumnDataSource(data=dict(x=x, y=y))
     pf = figure(y_axis_type='log', x_range=x_range,
-                title='HR Diagram for {0}.'.format(cluster.name))
+                title='H-R Diagram for {0}.'.format(cluster.name))
     _diagram(source=source, plot_figure=pf, name='hr', color=colors,
-             xaxis_label='Effective Tempurature (K)',
+             xaxis_label='Effective Temperature (K)',
              yaxis_label='Luminosity (☉)')
     return pf
 
