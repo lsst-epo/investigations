@@ -35,7 +35,6 @@ class Berkeley20(OpenCluster):
     def distance(self):
         return self.coord.distance.value
 
-
     def cds_stars(cls):
         with open('data/berkeley20.tsv', newline='') as f:
             reader = csv.reader(f, delimiter=';')

@@ -3,20 +3,6 @@
 import math
 
 
-def abs_mag(cluster, distance=None):
-    """
-    """
-    stars = cluster.stars()
-    b_v = stars[0]
-    m_v = stars[1]
-    M_v = []
-    if not distance:
-        distance = cluster.coord.distance.value
-    for m in m_v:
-        M_v.append(m - 5 * (math.log(distance, 10) - 1))
-    return (b_v, M_v)
-
-
 def distance(modulus):
     """
     """
@@ -29,7 +15,7 @@ def luminosity(cluster):
     abs_mags = absolute_mag(cluster)
     ls = []
     for abs_mag in abs_mags:
-        ls.append(pow(10, (4.74-abs_mag) * 0.4))  # * L_ZERO_POINT
+        ls.append(pow(10, (4.74-abs_mag) * 0.4))  # In watts add * L_ZERO_POINT
     return ls
 
 
@@ -43,8 +29,8 @@ def teff(cluster):
     b_vs, _ = cluster.stars()
     teffs = []
     for b_v in b_vs:
-        teffs.append(8575 - 5222.27 * (b_v) \
-                     + 1380.92 * b_v**2 \
+        teffs.append(8575 - 5222.27 * b_v
+                     + 1380.92 * b_v**2
                      + 701.7 * b_v * (cluster.fe_h - 0.15))
     return teffs
 
@@ -55,8 +41,8 @@ def absolute_mag(cluster):
     abs_mags = []
     teffs = teff(cluster)
     _, vs = cluster.stars()
-    for t,v in zip(teffs, vs):
-        abs_mags.append(v + bc(t) - 5 * math.log(cluster.distance / 10, 10) \
+    for t, v in zip(teffs, vs):
+        abs_mags.append(v + bc(t) - 5 * math.log(cluster.distance / 10, 10)
                         - 3.1 * cluster.eb_v)
     return abs_mags
 
@@ -68,3 +54,23 @@ def bc(temp):
     """
     return (-1.007203E1 + temp * 4.347330E-3 - temp**2 * 6.159563E-7
             + temp**3 * 2.851201E-11)
+
+
+def color(teffs):
+    """
+    Conventional color descriptions of stars.
+    Source: https://en.wikipedia.org/wiki/Stellar_classification
+    """
+    colors = []
+    for t in teffs:
+        if t >= 7500:
+            colors.append('#CAE1FF')
+        elif t >= 6000:
+            colors.append('#F6F6F6')
+        elif t >= 5200:
+            colors.append('#FFFEB2')
+        elif t >= 3700:
+            colors.append('#FFB28B')
+        else:
+            colors.append('#FF9966')
+    return colors
