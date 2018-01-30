@@ -151,7 +151,7 @@ def skyimage_figure(cluster):
     cluster's image.
     """
     pf_image = figure(x_range=(0, 1), y_range=(0, 1),
-                      title='Image for {0}.'.format(cluster.name))
+                      title='Image of {0}'.format(cluster.name))
     pf_image.image_url(url=[cluster.image_path],
                        x=0, y=0, w=1, h=1, anchor='bottom_left')
     pf_image.toolbar_location = None
@@ -170,10 +170,10 @@ def hr_diagram_figure(cluster):
     x_range = [max(x) + max(x) * 0.05, min(x) - min(x) * 0.05]
     source = ColumnDataSource(data=dict(x=x, y=y))
     pf = figure(y_axis_type='log', x_range=x_range,
-                title='H-R Diagram for {0}.'.format(cluster.name))
+                title='H-R Diagram for {0}'.format(cluster.name))
     _diagram(source=source, plot_figure=pf, name='hr', color=colors,
-             xaxis_label='Effective Temperature (K)',
-             yaxis_label='Luminosity (☉)')
+             xaxis_label='Temperature (Kelvin)',
+             yaxis_label='Luminosity (solar units)')
     return pf
 
 
