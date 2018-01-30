@@ -3,20 +3,6 @@
 import math
 
 
-def abs_mag(cluster, distance=None):
-    """
-    """
-    stars = cluster.stars()
-    b_v = stars[0]
-    m_v = stars[1]
-    M_v = []
-    if not distance:
-        distance = cluster.coord.distance.value
-    for m in m_v:
-        M_v.append(m - 5 * (math.log(distance, 10) - 1))
-    return (b_v, M_v)
-
-
 def distance(modulus):
     """
     """
@@ -68,3 +54,22 @@ def bc(temp):
     """
     return (-1.007203E1 + temp * 4.347330E-3 - temp**2 * 6.159563E-7
             + temp**3 * 2.851201E-11)
+
+def color(teffs):
+    """
+    Conventional color descriptions of stars.
+    Source: https://en.wikipedia.org/wiki/Stellar_classification#Conventional_color_description
+    """
+    colors = []
+    for t in teffs:
+        if t >= 7500:
+            colors.append('#CAE1FF')
+        elif t >= 6000:
+            colors.append('#D6D6D6')
+        elif t >= 5200:
+            colors.append('#FFFEB2')
+        elif t >= 3700:
+            colors.append('#FFB28B')
+        else:
+            colors.append('#FF9966')
+    return colors
