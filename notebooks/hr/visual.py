@@ -35,7 +35,7 @@ def _diagram(plot_figure, source=None, color='black', line_color='#444444',
     to create an H-R diagram.
     """
     plot_figure.circle(x=source.data.get('x'), y=source.data.get('y'),
-                       size=8, color=color, name=name,
+                       size=8, color=color, alpha=1, name=name,
                        line_color=line_color, line_width=0.5)
     plot_figure.xaxis.axis_label = xaxis_label
     plot_figure.yaxis.axis_label = yaxis_label
@@ -170,10 +170,17 @@ def hr_diagram_figure(cluster):
     x_range = [max(x) + max(x) * 0.05, min(x) - min(x) * 0.05]
     source = ColumnDataSource(data=dict(x=x, y=y))
     pf = figure(y_axis_type='log', x_range=x_range,
+<<<<<<< HEAD
                 title='H-R Diagram for {0}'.format(cluster.name))
     _diagram(source=source, plot_figure=pf, name='hr', color=colors,
              xaxis_label='Temperature (Kelvin)',
              yaxis_label='Luminosity (solar units)')
+=======
+                title='HR Diagram for {0}.'.format(cluster.name))
+    _diagram(source=source, plot_figure=pf, name='hr', color=colors,
+             xaxis_label='Effective Tempurature (K)',
+             yaxis_label='Luminosity (☉)')
+>>>>>>> 78d52b17be386c0b69d73b530135181b43c8e8f6
     return pf
 
 
