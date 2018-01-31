@@ -171,6 +171,7 @@ def hr_diagram_figure(cluster):
     source = ColumnDataSource(data=dict(x=x, y=y))
     pf = figure(y_axis_type='log', x_range=x_range,
 <<<<<<< HEAD
+<<<<<<< HEAD
                 title='H-R Diagram for {0}'.format(cluster.name))
     _diagram(source=source, plot_figure=pf, name='hr', color=colors,
              xaxis_label='Temperature (Kelvin)',
@@ -181,6 +182,12 @@ def hr_diagram_figure(cluster):
              xaxis_label='Effective Tempurature (K)',
              yaxis_label='Luminosity (☉)')
 >>>>>>> 78d52b17be386c0b69d73b530135181b43c8e8f6
+=======
+                title='H-R Diagram for {0}'.format(cluster.name))
+    _diagram(source=source, plot_figure=pf, name='hr', color=colors,
+             xaxis_label='Temperature (Kelvin)',
+             yaxis_label='Luminosity (solar units)')
+>>>>>>> b9e1ad1da708c2bd181cf9d61c13fefe983324fc
     return pf
 
 
