@@ -30,6 +30,11 @@ class Berkeley20(OpenCluster):
     d_modulus = 14.7  # (m - M)
     name = "Berkeley 20"
     image_path = 'notebooks/data/berkeley20-square.png'
+    _dtype = [('id', 'i'), ('x', 'f'), ('y', 'f'),
+              ('u_b', 'f'), ('b_v', 'f'), ('v_r', 'f'),
+              ('v_i', 'f'), ('err_u_b', 'f'),
+              ('err_b_v', 'f'), ('err_v_r', 'f'),
+              ('err_v_i', 'f'), ('lum', 'f'), ('temp', 'f')]
 
     @property
     def distance(self):
@@ -43,8 +48,8 @@ class Berkeley20(OpenCluster):
             data = []
             for b in b20rawdata:
                 data.append(b[3:5])
-            x = [float(data[i][1]) for i in range(len(data) - 1)]
-            y = [float(data[i][0]) for i in range(len(data) - 1)]
+            x = [float(data[i][1]) for i in range(len(data))]
+            y = [float(data[i][0]) for i in range(len(data))]
             return (x, y)
 
     def stars(cls):
@@ -57,10 +62,31 @@ class Berkeley20(OpenCluster):
                 V = float(values[3])
                 B_V = float(values[5])
                 data.append([V, B_V])
-            x = [data[i][1] for i in range(len(data) - 1)]
-            y = [data[i][0] for i in range(len(data) - 1)]
+            x = [data[i][1] for i in range(len(data))]
+            y = [data[i][0] for i in range(len(data))]
             return (x, y)
 
+    def _dtype_row(cls, arr, values):
+        i = 0
+        v_len = len(values)
+        for name in arr.dtype.names:
+            if i < v_len:
+                values[i] = arr.dtype[name].type(values[i])
+            else:
+                values.append(0)
+            i += 1
+        return np.array([tuple(values)], dtype=cls._dtype)
+
+    def to_array(cls):
+        with open('data/berkeley20-durgapal.dat', newline='') as f:
+            lines = f.readlines()
+            data = np.empty((0,1), dtype=cls._dtype)
+            pattern = re.compile("^\s+|\s* \s*|\s+$")
+            for l in lines:
+                values = [v for v in pattern.split(l) if v]
+                newrow = cls._dtype_row(data, values)
+                data = np.row_stack((data, newrow))
+            return data
 
 class NGC2849(OpenCluster):
     """
