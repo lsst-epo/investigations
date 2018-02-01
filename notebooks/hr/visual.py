@@ -8,6 +8,8 @@ from bokeh.models import ColumnDataSource, Range1d
 from bokeh.models.widgets import Slider, TextInput, Div
 from bokeh.plotting import figure, show
 
+import numpy
+
 from .data import Berkeley20, NGC2849, get_hr_data, L_ZERO_POINT
 from .science import absolute_mag, distance, luminosity, teff, color
 
@@ -175,6 +177,35 @@ def hr_diagram_figure(cluster):
              xaxis_label='Temperature (Kelvin)',
              yaxis_label='Luminosity (solar units)')
     return pf
+
+
+def calculate_diagram_ranges(data):
+    """
+    Given a numpy array calculate what the ranges of the H-R
+    diagram should be.
+    """
+    temps = data['temp']
+    x_range = [1.05 * numpy.amax(temps), .95 * numpy.amin(temps)]
+
+    lums = data['lum']
+    y_range = [.50 * numpy.amin(lums), 2 * numpy.amax(lums)]
+    return (x_range, y_range)
+
+
+def hr_diagram_from_data(data, x_range, y_range):
+    """
+    Given a numpy array create a Bokeh plot figure creating an
+    H-R diagram.
+    """
+    temps, lums = data['temp'], data['lum']
+    x, y = temps, lums
+    colors = color(temps)
+    source = ColumnDataSource(data=dict(x=x, y=y))
+    pf = figure(y_axis_type='log', x_range=x_range, y_range=y_range)
+    _diagram(source=source, plot_figure=pf, name='hr', color=colors,
+             xaxis_label='Temperature (Kelvin)',
+             yaxis_label='Luminosity (solar units)')
+    show(pf)
 
 
 def hr_diagram_skyimage(cluster_name):
