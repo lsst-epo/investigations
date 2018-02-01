@@ -5,6 +5,7 @@ import random
 
 from bokeh.layouts import row, column, widgetbox
 from bokeh.models import ColumnDataSource, Range1d
+from bokeh.models.formatters import NumeralTickFormatter
 from bokeh.models.widgets import Slider, TextInput, Div
 from bokeh.plotting import figure, show
 
@@ -41,6 +42,7 @@ def _diagram(plot_figure, source=None, color='black', line_color='#444444',
                        line_color=line_color, line_width=0.5)
     plot_figure.xaxis.axis_label = xaxis_label
     plot_figure.yaxis.axis_label = yaxis_label
+    plot_figure.yaxis.formatter = NumeralTickFormatter()
 
 
 def cc_diagram(cluster_name):
