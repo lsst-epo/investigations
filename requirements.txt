@@ -1,3 +1,4 @@
 bokeh
-notebook
 jupyterlab
+notebook
+pandas

@@ -5,6 +5,7 @@ import re
 from astropy import units as u
 from astropy.coordinates import SkyCoord
 
+import pandas as pd
 
 class OpenCluster(object):
     ra = None
@@ -179,6 +180,32 @@ def get_hr_data(name):
                              "implemented right now.")
     if data:
         return data
+
+
+def pprint(arr, columns=('temp', 'lum'),
+           names=('Temperature\n(Kelvin)', 'Luminosity\n(solar units)'),
+           max_rows=32, precision=2):
+    """
+    Create a pandas DataFrame from a numpy ndarray.
+
+    By default use temp and lum with max rows of 32 and precision of 2.
+
+    arr
+    columns - The columns to include in the pandas DataFrame.
+    names - The column names for the pandas DataFrame.
+    max_rows - An integer to set the pandas display.max_rows option.
+               Pass True to set to 1000.
+
+    precision - An integer to set the pandas precision option.
+    """
+    if max_rows is True:
+        pd.set_option('display.max_rows', 1000)
+    else:
+        pd.set_option('display.max_rows', max_rows)
+    pd.set_option('precision', 2)
+    df = pd.DataFrame(arr.flatten(), index=arr['id'].flatten(), columns=columns)
+    df.columns = names
+    return df
 
 
 L_ZERO_POINT = 3.0128 * pow(10, 28)  # units to add:  * u.watt
