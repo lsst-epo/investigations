@@ -1,4 +1,6 @@
-bokeh
-jupyterlab
-notebook
-pandas
+astropy==3.0
+bokeh==0.12.14
+jupyterlab==0.31.12
+notebook==5.4.0
+pandas==0.22.0
+#ipyaladin==0.1.3 # install through make.
