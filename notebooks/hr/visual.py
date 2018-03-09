@@ -227,10 +227,8 @@ def hr_diagram_interactive(doc):
     """
     """
     text_input = TextInput(value='ngc2849', title='Cluster:')
-    cluster = get_hr_data('ngc2849')
-    source = ColumnDataSource(data=dict(x=x, y=y), name='cluster')
+    cluster = get_hr_data('berkeley20')
     pf = hr_diagram_figure(cluster)
-    source = pf.source
     pf_image = skyimage_figure(cluster)
     inputs = widgetbox(text_input)
     layout = column(text_input, row(pf_image, pf))
