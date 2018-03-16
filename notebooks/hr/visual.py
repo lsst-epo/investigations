@@ -39,13 +39,13 @@ def _telescope_pointing_widget(cluster_name):
 
 
 def _diagram(plot_figure, source=None, color='black', line_color='#444444',
-             xaxis_label="B-V [mag]", yaxis_label='V [mag]', name=None):
+             xaxis_label='B-V [mag]', yaxis_label='V [mag]', name=None):
     """Use a :class:`~bokeh.plotting.figure.Figure` and x and y collections
     to create an H-R diagram.
     """
     logging.info(type(source))
     logging.info(source)
-    plot_figure.circle(x="x", y="y", source=source,
+    plot_figure.circle(x='x', y='y', source=source,
                        size=8, color=color, alpha=1, name=name,
                        line_color=line_color, line_width=0.5)
     plot_figure.xaxis.axis_label = xaxis_label
@@ -182,7 +182,7 @@ def hr_diagram_figure(cluster):
     x_range = [max(x) + max(x) * 0.05, min(x) - min(x) * 0.05]
     source = ColumnDataSource(data=dict(x=x, y=y, color=colors))
     pf = figure(y_axis_type='log', x_range=x_range, name='hr',
-                tools="box_select,lasso_select,reset",
+                tools='box_select,lasso_select,reset',
                 title='H-R Diagram for {0}'.format(cluster.name))
     _diagram(source=source, plot_figure=pf, name='hr',
              color={'field': 'color', 'transform': color_mapper},
@@ -242,7 +242,7 @@ def hr_diagram_skyimage(cluster_name):
     pf = hr_diagram_figure(cluster)
     pf_image = skyimage_figure(cluster)
     layout = column(text_input, _telescope_pointing_widget(cluster.name),
-                    row(pf_image, pf), sizing_mode="scale_width")
+                    row(pf_image, pf), sizing_mode='scale_width')
     show(layout)
 
 
@@ -330,7 +330,7 @@ def hr_diagram_selection(cluster_name):
              yaxis_label='Luminosity (solar units)')
     pf_selected = figure(y_axis_type='log', y_range=pf.y_range,
                          x_range=x_range,
-                         tools="reset",
+                         tools='reset',
                          title='H-R Diagram for {0}'.format(cluster.name))
     _diagram(source=source_selected, plot_figure=pf_selected, name='hr',
              color={'field': 'color', 'transform': color_mapper},
