@@ -1,10 +1,13 @@
 .PHONY: all vendors ipyaladin_clone ipyaladin_extensions ipyaladin clean
 
 
-all: ipyaladin
+all: ipyaladin jupyterlab_bokeh
 
 vendors:
 	mkdir -p ./vendors
+
+jupyterlab_bokeh:
+	jupyter labextension install jupyterlab_bokeh
 
 ipyaladin_clone:
 	-git clone https://github.com/cds-astro/ipyaladin.git ./vendors/ipyaladin

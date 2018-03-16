@@ -7,6 +7,7 @@ from astropy.coordinates import SkyCoord
 
 import pandas as pd
 
+
 class OpenCluster(object):
     ra = None
     dec = None
@@ -22,14 +23,14 @@ class Berkeley20(OpenCluster):
     http://simbad.u-strasbg.fr/simbad/sim-id?Ident=Berkeley20&submit=submit+id
     https://www.aanda.org/articles/aa/abs/2002/27/aa2476/aa2476.html
     """
-    coord = SkyCoord("05 32 37.0 +00 11 18", unit=(u.hourangle, u.deg),
+    coord = SkyCoord('05 32 37.0 +00 11 18', unit=(u.hourangle, u.deg),
                      distance=9000 * u.parsec)  # +- 480
     fe_h = -0.3
     tau = 5.5
     eb_v = 0.15
     Z = 0.008  # Z_sun
     d_modulus = 14.7  # (m - M)
-    name = "Berkeley 20"
+    name = 'Berkeley 20'
     image_path = 'notebooks/data/berkeley20-square.png'
     _dtype = [('id', 'i'), ('x', 'f'), ('y', 'f'),
               ('u_b', 'f'), ('b_v', 'f'), ('v_r', 'f'),
@@ -57,7 +58,7 @@ class Berkeley20(OpenCluster):
         with open('data/berkeley20-durgapal.dat', newline='') as f:
             lines = f.readlines()
             data = []
-            pattern = re.compile("^\s+|\s* \s*|\s+$")
+            pattern = re.compile('^\s+|\s* \s*|\s+$')
             for l in lines:
                 values = [v for v in pattern.split(l) if v]
                 V = float(values[3])
@@ -81,20 +82,21 @@ class Berkeley20(OpenCluster):
     def to_array(cls):
         with open('data/berkeley20-durgapal.dat', newline='') as f:
             lines = f.readlines()
-            data = np.empty((0,1), dtype=cls._dtype)
-            pattern = re.compile("^\s+|\s* \s*|\s+$")
+            data = np.empty((0, 1), dtype=cls._dtype)
+            pattern = re.compile('^\s+|\s* \s*|\s+$')
             for l in lines:
                 values = [v for v in pattern.split(l) if v]
                 newrow = cls._dtype_row(data, values)
                 data = np.row_stack((data, newrow))
             return data
 
+
 class NGC2849(OpenCluster):
     """
     paper: http://iopscience.iop.org/article/10.1086/424939/pdf
            https://academic.oup.com/mnras/article/430/1/221/984833
     """
-    coord = SkyCoord("09 19 23.0 -40 31 01", unit=(u.hourangle, u.deg),
+    coord = SkyCoord('09 19 23.0 -40 31 01', unit=(u.hourangle, u.deg),
                      distance=6110 * u.parsec)
 
     def stars(cls):
@@ -102,7 +104,7 @@ class NGC2849(OpenCluster):
             lines = f.readlines()
             lines = lines[2:]
             data = []
-            pattern = re.compile("^\s+|\s* \s*|\s+$")
+            pattern = re.compile('^\s+|\s* \s*|\s+$')
             for l in lines:
                 values = [v for v in pattern.split(l) if v]
                 V = float(values[7])
@@ -117,7 +119,7 @@ class NGC7790(OpenCluster):
     """
     paper: https://aas.aanda.org/articles/aas/pdf/2000/15/ds6060.pdf
     """
-    coord = SkyCoord("23 58 24.0 +61 12 30", unit=(u.hourangle, u.deg),
+    coord = SkyCoord('23 58 24.0 +61 12 30', unit=(u.hourangle, u.deg),
                      distance=3230 * u.parsec)
 
 
@@ -167,17 +169,17 @@ temps = [['O5', 37500, -1.47, -0.32],
 
 
 def get_hr_data(name):
-    if name.lower() == "berkeley20":
+    if name.lower() == 'berkeley20':
         data = Berkeley20()
-    elif name.lower() == "berkeley20_cds":
+    elif name.lower() == 'berkeley20_cds':
         b20 = Berkeley20()
         b20.stars = b20.cds_stars
         data = b20
-    elif name.lower() == "ngc2849":
+    elif name.lower() == 'ngc2849':
         data = NGC2849()
     else:
-        raise NotImplemented("Only berkeley20 and ngc2849 are "
-                             "implemented right now.")
+        raise NotImplemented('Only berkeley20 and ngc2849 are '
+                             'implemented right now.')
     if data:
         return data
 
@@ -205,7 +207,8 @@ def pprint(arr, columns=('temp', 'lum'),
     elif type(max_rows) is int:
         pd.set_option('display.max_rows', max_rows)
     pd.set_option('precision', precision)
-    df = pd.DataFrame(arr.flatten(), index=arr['id'].flatten(), columns=columns)
+    df = pd.DataFrame(arr.flatten(), index=arr['id'].flatten(),
+                      columns=columns)
     df.columns = names
     return df
 

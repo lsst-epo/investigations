@@ -11,7 +11,7 @@ Install
 
 ```bash
 pip install -r requirements.txt
-jupyter labextension install jupyterlab_bokeh
+make
 ```
 
 Extras

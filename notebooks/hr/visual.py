@@ -1,13 +1,19 @@
 """Visual for H-R diagram investigations.
 """
+import logging
 import math
 import random
 
 from bokeh.layouts import row, column, widgetbox
-from bokeh.models import ColumnDataSource, Range1d
+from bokeh.models import CategoricalColorMapper, ColumnDataSource,\
+    CustomJS, LassoSelectTool, Range1d, ResetTool
 from bokeh.models.formatters import NumeralTickFormatter
 from bokeh.models.widgets import Slider, TextInput, Div
 from bokeh.plotting import figure, show
+
+from ipyaladin import Aladin
+
+from ipywidgets import Layout, Box, widgets
 
 import numpy
 
@@ -33,11 +39,13 @@ def _telescope_pointing_widget(cluster_name):
 
 
 def _diagram(plot_figure, source=None, color='black', line_color='#444444',
-             xaxis_label="B-V [mag]", yaxis_label='V [mag]', name=None):
+             xaxis_label='B-V [mag]', yaxis_label='V [mag]', name=None):
     """Use a :class:`~bokeh.plotting.figure.Figure` and x and y collections
     to create an H-R diagram.
     """
-    plot_figure.circle(x=source.data.get('x'), y=source.data.get('y'),
+    logging.info(type(source))
+    logging.info(source)
+    plot_figure.circle(x='x', y='y', source=source,
                        size=8, color=color, alpha=1, name=name,
                        line_color=line_color, line_width=0.5)
     plot_figure.xaxis.axis_label = xaxis_label
@@ -170,12 +178,14 @@ def hr_diagram_figure(cluster):
     """
     temps, lums = teff(cluster), luminosity(cluster)
     x, y = temps, lums
-    colors = color(temps)
+    colors, color_mapper = hr_diagram_color_helper(temps)
     x_range = [max(x) + max(x) * 0.05, min(x) - min(x) * 0.05]
-    source = ColumnDataSource(data=dict(x=x, y=y))
-    pf = figure(y_axis_type='log', x_range=x_range,
+    source = ColumnDataSource(data=dict(x=x, y=y, color=colors))
+    pf = figure(y_axis_type='log', x_range=x_range, name='hr',
+                tools='box_select,lasso_select,reset',
                 title='H-R Diagram for {0}'.format(cluster.name))
-    _diagram(source=source, plot_figure=pf, name='hr', color=colors,
+    _diagram(source=source, plot_figure=pf, name='hr',
+             color={'field': 'color', 'transform': color_mapper},
              xaxis_label='Temperature (Kelvin)',
              yaxis_label='Luminosity (solar units)')
     return pf
@@ -201,26 +211,56 @@ def hr_diagram_from_data(data, x_range, y_range):
     """
     temps, lums = data['temp'], data['lum']
     x, y = temps, lums
-    colors = color(temps)
-    source = ColumnDataSource(data=dict(x=x, y=y))
+    colors, color_mapper = hr_diagram_color_helper(temps)
+    source = ColumnDataSource(data=dict(x=x, y=y, color=colors))
     pf = figure(y_axis_type='log', x_range=x_range, y_range=y_range)
-    _diagram(source=source, plot_figure=pf, name='hr', color=colors,
+    _diagram(source=source, plot_figure=pf, name='hr',
+             color={'field': 'color', 'transform': color_mapper},
              xaxis_label='Temperature (Kelvin)',
              yaxis_label='Luminosity (solar units)')
     show(pf)
+
+
+def cluster_text_input(cluster, title=None):
+    """
+    Create an :class:`~bokeh.models.widgets.TextInput` using
+    the cluster.name as the default value and title.
+
+    If no title is provided use, 'Type in the name of your cluster
+    and press Enter/Return:'.
+    """
+    if not title:
+        title = 'Type in the name of your cluster and press Enter/Return:'
+    return TextInput(value=cluster.name, title=title)
 
 
 def hr_diagram_skyimage(cluster_name):
     """
     """
     cluster = get_hr_data(cluster_name)
-    input_caption = 'Type in the name of your cluster and press Enter/Return:'
-    text_input = TextInput(value=cluster.name, title=input_caption)
+    text_input = cluster_text_input(cluster)
     pf = hr_diagram_figure(cluster)
     pf_image = skyimage_figure(cluster)
     layout = column(text_input, _telescope_pointing_widget(cluster.name),
-                    row(pf_image, pf), sizing_mode="scale_width")
+                    row(pf_image, pf), sizing_mode='scale_width')
     show(layout)
+
+
+def ipywidget_box(bokeh_widget):
+    """
+    """
+    outw = widgets.Output()
+    display(outw)
+    return outw
+
+
+def hr_diagram_skyviewer(cluster_name):
+    """
+    """
+    cluster = get_hr_data(cluster_name)
+    text_input = cluster_text_input(cluster)
+    pf = hr_diagram_figure(cluster)
+    skyviewer = None
 
 
 def hr_diagram_interactive(doc):
@@ -249,3 +289,66 @@ def hr_diagram_interactive(doc):
 
     text_input.on_change('value', update_data)
     doc.add_root(layout)
+
+
+def hr_diagram_color_helper(temps):
+    colors = color(temps)
+    color_mapper = CategoricalColorMapper(
+        factors=['blue_white',
+                 'white',
+                 'yellowish_white',
+                 'pale_yellow_orange',
+                 'light_orange_red'],
+        palette=['#CAE1FF',
+                 '#F6F6F6',
+                 '#FFFEB2',
+                 '#FFB28B',
+                 '#FF9966'])
+    return colors, color_mapper
+
+
+def hr_diagram_selection(cluster_name):
+    """
+    Given a cluster create two Bokeh plot based H-R diagrams.
+    The Selection in the left H-R diagram will show up on the
+    right one.
+    """
+    cluster = get_hr_data(cluster_name)
+    temps, lums = teff(cluster), luminosity(cluster)
+    x, y = temps, lums
+    colors, color_mapper = hr_diagram_color_helper(temps)
+    x_range = [max(x) + max(x) * 0.05, min(x) - min(x) * 0.05]
+    source = ColumnDataSource(data=dict(x=x, y=y, color=colors), name='hr')
+    source_selected = ColumnDataSource(data=dict(x=[], y=[], color=[]),
+                                       name='hr')
+    pf = figure(y_axis_type='log', x_range=x_range,
+                tools='lasso_select,reset',
+                title='H-R Diagram for {0}'.format(cluster.name))
+    _diagram(source=source, plot_figure=pf, name='hr',
+             color={'field': 'color', 'transform': color_mapper},
+             xaxis_label='Temperature (Kelvin)',
+             yaxis_label='Luminosity (solar units)')
+    pf_selected = figure(y_axis_type='log', y_range=pf.y_range,
+                         x_range=x_range,
+                         tools='reset',
+                         title='H-R Diagram for {0}'.format(cluster.name))
+    _diagram(source=source_selected, plot_figure=pf_selected, name='hr',
+             color={'field': 'color', 'transform': color_mapper},
+             xaxis_label='Temperature (Kelvin)',
+             yaxis_label='Luminosity (solar units)')
+    source.callback = CustomJS(args=dict(source_selected=source_selected), code="""
+        var inds = cb_obj.selected['1d'].indices;
+        var d1 = cb_obj.data;
+        var d2 = source_selected.data;
+        console.log(inds);
+        d2['x'] = []
+        d2['y'] = []
+        d2['color'] = []
+        for (i = 0; i < inds.length; i++) {
+            d2['x'].push(d1['x'][inds[i]])
+            d2['y'].push(d1['y'][inds[i]])
+            d2['color'].push(d1['color'][inds[i]])
+        }
+        source_selected.change.emit();
+        """)
+    show(row(pf, pf_selected))
