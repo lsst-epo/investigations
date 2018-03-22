@@ -148,13 +148,20 @@ def m_M_compare_interactive_ngc2849(doc):
     doc.title = 'Distance through μ'
 
 
-def hr_diagram(cluster_name):
+def hr_diagram(cluster_name, output=None):
     """Create a :class:`~bokeh.plotting.figure.Figure` to create an H-R
     diagram using the cluster_name; then show it.
+
+    Re
     """
     cluster = get_hr_data(cluster_name)
     pf = hr_diagram_figure(cluster)
-    show(pf)
+    if output:
+        with output:
+            h = show(pf, notebook_handle=True)
+    else:
+        h = show(pf, notebook_handle=True)
+    return h
 
 
 def skyimage_figure(cluster):
