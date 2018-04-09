@@ -1,13 +1,15 @@
-# hr-diagram-investigations
-LSST EPO Hertzsprung–Russell diagram (HR diagram) investigations using Jupyter Notebooks.
+# investigations
+LSST EPO formal education investigations using Jupyter Notebooks.
 
-Notebooks
----------
+properties_of_stars
+-------------------
 
-The notebooks can be found in the `notebooks` directory. The requirements can be found in the `requirements.txt` file.
+The first investigation uses Hertzsprung–Russell diagram (HR diagram) to teach properties of stars. The `properties_of_stars` directory contains these Jupyter Notebooks.
 
 Install
-------
+-------
+
+The requirements can be found in the `requirements.txt` file.
 
 ```bash
 pip install -r requirements.txt
@@ -17,7 +19,7 @@ make
 Extras
 ------
 
-Design and other supporting content can be found in the `extras` directory.
+Extra notebooks and other supporting content can be found in the `extras` directory.
 
 License
 -------
