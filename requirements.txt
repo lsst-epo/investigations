@@ -1,7 +1,7 @@
-astropy==3.0.1
-bokeh==0.12.15
-jupyterlab==0.31.12
-notebook==5.4.1
-pandas==0.22.0
-astropixie_widgets==0.1.3
+astropy
+bokeh
+jupyterlab
+notebook
+pandas
+astropixie_widgets
 #ipyaladin==0.1.3 # install through make.
