@@ -10,7 +10,7 @@ jupyterlab_bokeh:
 	jupyter labextension install jupyterlab_bokeh
 
 ipyaladin_clone:
-	-git clone https://github.com/cds-astro/ipyaladin.git ./vendors/ipyaladin
+	-git clone https://github.com/lsst-epo/ipyaladin.git ./vendors/ipyaladin
 
 ipyaladin_python:
 	cd ./vendors/ipyaladin/;pip install -e .
